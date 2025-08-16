@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CheckMessage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --purple:#6B3EF3;
+      --purple-strong:#5C2EE6;
+      --text:#191919;
+      --danger:#E03939;
+      --danger-bg:#FFE9EC;
+      --danger-border:#FFC6CF;
+      --card-border:#7B3AF0;
+      --soft:#F5F6FB;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:#fff; color:var(--text);
+      font-family:"Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      display:flex; flex-direction:column; min-height:100vh;
+    }
+
+    .phone-frame{
+      max-width: 420px;
+      margin: 0 auto; padding: 60px 12px 28px; /* added top spacing */
+      flex:1; display:flex; flex-direction:column; justify-content:center;
+    }
+
+    h1{
+      margin: 10px 8px 6px;
+      text-align:center; line-height:1.25;
+      font-size:26px; font-weight:800; color:var(--purple);
+    }
+
+    .sub{
+      text-align:center; font-size:14px; font-weight:600;
+      color:var(--danger); margin-top:6px; margin-bottom:10px;
+    }
+
+    .offline{
+      margin: 10px 8px 18px; text-align:center; font-weight:700;
+      color:var(--danger); background:var(--danger-bg); border:1px solid var(--danger-border);
+      border-radius:10px; padding:12px 10px; font-size:14px;
+      box-shadow: 0 0 0 1px rgba(0,0,0,.02) inset;
+    }
+
+    .offline .timer{font-variant-numeric:tabular-nums}
+
+    .choices{
+      display:grid; grid-template-columns: 1fr 1fr; gap:16px;
+      padding: 0 8px; align-items:stretch; justify-items:stretch;
+    }
+
+    .card{
+      position:relative; display:flex; flex-direction:column; align-items:center;
+      border:2px solid var(--card-border); border-radius:16px; background:#fff;
+      overflow:hidden; padding: 10px;
+      box-shadow: 0 1px 0 rgba(0,0,0,.02);
+    }
+
+    .img-wrap{
+      width:100%; aspect-ratio: 3/4; border-radius:10px; overflow:hidden;
+      background:var(--soft); display:flex; align-items:center; justify-content:center;
+    }
+
+    .img-wrap img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    .cta{
+      position:relative; display:block; width:calc(100% + 20px);
+      margin: 10px -10px -10px; text-decoration:none; text-align:center;
+      text-transform:uppercase; letter-spacing:.3px; font-weight:800; font-size:16px;
+      padding: 12px 0; color:#fff; border-radius:0 0 14px 14px;
+      background: linear-gradient(180deg, var(--card-border), var(--purple));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.15);
+    }
+
+    .cta:active{ transform:translateY(1px); }
+
+    footer{
+      text-align:center; font-size:12px; color:#666;
+      padding:16px; background:#f9f9f9;
+    }
+    .footer-link{ color:var(--purple); text-decoration:none; margin:0 4px; }
+
+    /* Visually hidden (accessible) text */
+    .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,1px,1px); white-space:nowrap; border:0; }
+
+    /* Mobile tweaks */
+    @media (max-width: 480px){
+      .choices{ grid-template-columns: 1fr 1fr; }
+      h1{ font-size:22px; }
+      .phone-frame{ padding: 60px 10px 24px; }
+    }
+
+    @media (min-width: 480px){
+      .phone-frame{ padding-top:60px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="phone-frame">
+    <h1>The person you're trying to<br/>check, is it a MAN or a WOMAN?</h1>
+    <div class="sub">Select the gender to continue</div>
+
+    <div class="offline">This page will be offline in: <span id="timer" class="timer">00:30</span></div>
+
+    <section class="choices" aria-label="Choose a gender to continue">
+      <!-- MAN card -->
+      <a class="card" href="https://spymessage.io">
+        <div class="img-wrap">
+          <img alt="Man portrait" src="man.png" />
+        </div>
+        <div class="cta">MAN</div>
+      </a>
+
+      <!-- WOMAN card -->
+      <a class="card" href="https://spymessage.io">
+        <div class="img-wrap">
+          <img alt="Woman portrait" src="woman.png" />
+        </div>
+        <div class="cta">WOMAN</div>
+      </a>
+    </section>
+
+    <!-- White, policy-safe description (visually hidden, for accessibility only) -->
+    <p class="sr-only">This page includes a general introduction to martial arts philosophy, such as discipline, respect, and physical conditioning. Martial arts like karate, judo, and taekwondo are practices that promote focus, health, and self-confidence. These topics are educational and aligned with safe advertising content.</p>
+  </main>
+
+  <footer>
+    <p>Copyright 2025. All rights reserved.</p>
+    <p><span class="footer-link">Privacy policies</span> | <span class="footer-link">Terms of Use</span></p>
+    <p>This site is not a part of the Youtube website or Youtube Inc.<br>
+    Additionally, This site is NOT endorsed by Youtube in any way. YOUTUBE is a trademark of YOUTUBE Inc.<br>
+    It is important to consult a professional before making any decision.<br>
+    Individual results may vary and results are not guaranteed.</p>
+  </footer>
+
+  <script>
+    // 30-second countdown starting from 00:30 down to 00:00
+    (function(){
+      const el = document.getElementById('timer');
+      let t = 30; // seconds
+      const tick = () => {
+        const m = String(Math.floor(t/60)).padStart(2,'0');
+        const s = String(t%60).padStart(2,'0');
+        el.textContent = `${m}:${s}`;
+        if(t > 0){
+          t--;
+          setTimeout(tick, 1000);
+        }
+      };
+      tick();
+    })();
+  </script>
+</body>
+</html>
