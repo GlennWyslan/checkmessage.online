@@ -112,6 +112,22 @@
       box-shadow: 0 6px 18px rgba(0,0,0,.06) !important;
       border: 1px solid #eee !important;
     }
+
+    /* ==== ESCONDER LINHA DE RECORRÊNCIA (visual apenas) ==== */
+    .sc-payment-plan__details,
+    .sc-line--recurring,
+    .sc-recurring-description,
+    .sc-summary__recurring,
+    .sc-subscription__details,
+    .sc-line--subscription,
+    .sc-order-summary .sc-line--plan + .sc-line--recurring,
+    .sc-order-summary [data-role="recurring-description"],
+    .sc-order-summary [class*="recurring"],
+    .sc-order-summary [class*="subscription"] {
+      display: none !important;
+    }
+
+    .sc-order-summary .sc-line--total { margin-top: 8px; }
   </style>
 </head>
 <body style="margin:0; padding:0; background:#fff;">
