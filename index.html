@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SpyMessage — Reverse Phone Lookup</title>
+  <meta name="description" content="SpyMessage: descubra informações públicas associadas a um número, e-mail ou foto. Teste grátis por 7 dias."/>
+  <style>
+    :root{
+      --accent:#0b67ff;
+      --dark:#0f1724;
+      --muted:#6b7280;
+      --card:#ffffff;
+      --bg:#f7fafc;
+      --container:1100px;
+      --radius:12px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--dark);line-height:1.45}
+    header{background:linear-gradient(90deg, rgba(11,103,255,0.06), rgba(11,103,255,0.02));backdrop-filter: blur(4px);padding:20px 16px;position:sticky;top:0;z-index:20}
+    .wrap{max-width:var(--container);margin:0 auto}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700}
+    .brand .logo{width:44px;height:44px;border-radius:8px;background:var(--accent);display:inline-grid;place-items:center;color:#fff;font-size:18px}
+    .btn{background:var(--accent);color:#fff;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:600}
+    main{padding:40px 16px}
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:start}
+    .card{background:var(--card);border-radius:var(--radius);padding:22px;box-shadow:0 6px 18px rgba(12,18,30,0.06)}
+    h1{font-size:28px;margin:0 0 10px}
+    p.lead{color:var(--muted);margin:0 0 18px}
+    .features{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
+    .feature{background:#f8fafc;padding:12px;border-radius:10px;font-size:14px;color:var(--muted)}
+    form .field{margin-bottom:12px}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input[type="text"], input[type="email"], input[type="file"], select, button[type="submit"]{
+      width:100%;padding:12px;border-radius:8px;border:1px solid #e6eef8;background:#fff;font-size:15px;
+    }
+    .small{font-size:13px;color:var(--muted)}
+    .pricing{display:flex;gap:16px;flex-wrap:wrap;margin-top:18px}
+    .price-card{flex:1;min-width:240px;padding:18px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid #ecf2ff}
+    .price{font-size:22px;font-weight:700}
+    .trial{background:#eef6ff;padding:10px;border-radius:10px;margin-top:12px}
+    .section{margin-top:36px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .faq-item{margin-bottom:12px}
+    footer{padding:24px 16px;background:#fff;border-top:1px solid #eef2f7;margin-top:40px}
+    @media(max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
+      .features{grid-template-columns:1fr}
+    }
+    a.link-muted{color:var(--accent);text-decoration:none;font-weight:600}
+    .legal{font-size:13px;color:var(--muted);margin-top:8px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="logo">SM</div>
+        <div>
+          <div style="font-size:16px">SpyMessage</div>
+          <div style="font-size:12px;color:var(--muted)">Busca reversa — telefone, e-mail e imagem</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <a href="#" class="link-muted">Entrar</a>
+        <a href="#" class="btn">Iniciar trial</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <div class="card">
+          <h1>Busca reversa de telefone</h1>
+          <p class="lead">Digite um número e descubra nomes, endereços públicos, perfis sociais e outras informações disponíveis publicamente.</p>
+
+          <div style="display:flex;gap:8px;margin-bottom:12px">
+            <button class="btn" style="background:transparent;color:var(--accent);border:1px solid #dbeafe;padding:8px 12px;border-radius:8px">Telefone</button>
+            <button style="padding:8px 12px;border-radius:8px;border:1px solid #e6eef8;background:#fff">E-mail</button>
+            <button style="padding:8px 12px;border-radius:8px;border:1px solid #e6eef8;background:#fff">Foto</button>
+          </div>
+
+          <form id="lookupForm" onsubmit="event.preventDefault(); alert('Simulação: buscar ' + (document.getElementById('phone').value || document.getElementById('email').value || 'imagem'));">
+            <div class="field">
+              <label for="country">País</label>
+              <select id="country" aria-label="País">
+                <option value="US">Estados Unidos</option>
+                <option value="BR">Brasil</option>
+                <option value="CA">Canadá</option>
+                <option value="MX">México</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="phone">Número de telefone</label>
+              <input id="phone" type="text" placeholder="Ex: 204-123-4567" />
+            </div>
+
+            <div class="field">
+              <label for="email">Ou digite um e-mail</label>
+              <input id="email" type="email" placeholder="nome@exemplo.com" />
+            </div>
+
+            <div class="field">
+              <label for="photo">Ou faça upload de uma foto</label>
+              <input id="photo" type="file" accept="image/*" />
+              <div class="small">Imagens até 10 MB — o rosto deve estar visível.</div>
+            </div>
+
+            <div style="display:flex;gap:12px;margin-top:10px">
+              <button type="submit" class="btn">Buscar</button>
+              <a href="#" style="align-self:center;color:var(--muted);text-decoration:none">Como funciona</a>
+            </div>
+          </form>
+
+          <div class="section">
+            <div style="font-weight:700;margin-bottom:8px">O que você pode descobrir</div>
+            <div class="features">
+              <div class="feature">Nome completo potencialmente associado ao número</div>
+              <div class="feature">Endereço atual ou históricos</div>
+              <div class="feature">Possíveis membros da família</div>
+              <div class="feature">Perfis em redes sociais</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="card">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div>
+                <div style="font-size:16px;font-weight:700">Comece seu teste de 7 dias</div>
+                <div class="small">Somente <strong>$3.99</strong> para experimentar. Depois: $29.99/mês até cancelar.</div>
+              </div>
+              <div style="text-align:right">
+                <div class="price">$3.99</div>
+                <div class="small">Iniciar trial</div>
+              </div>
+            </div>
+
+            <div class="trial">
+              <strong>Oferta:</strong> teste por sete dias. Cancelamento em 1 clique.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <aside>
+        <div class="card">
+          <div style="font-weight:700;margin-bottom:8px">Por que usar SpyMessage?</div>
+          <ul style="padding-left:18px;color:var(--muted);margin:0">
+            <li>Identifique chamadas desconhecidas e evite golpes.</li>
+            <li>Reconecte com contatos antigos.</li>
+            <li>Verifique identidades para segurança em transações pessoais.</li>
+            <li>Revise seu próprio rastro digital.</li>
+          </ul>
+
+          <div style="margin-top:14px">
+            <div style="font-weight:700;margin-bottom:8px">Extras</div>
+            <div class="small">Use a busca para checar vendedores, futuros colegas de quarto, perfis ou identificar mensagens incômodas — sempre respeitando a lei e a privacidade.</div>
+          </div>
+
+          <div style="margin-top:18px">
+            <a class="btn" href="#">Ver planos completos</a>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <div style="font-weight:700;margin-bottom:8px">Últimos resultados (exemplo)</div>
+          <div class="small">Exemplos anônimos de pesquisas recentes mostrando nomes públicos e perfis associados.</div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section card">
+      <h2 style="margin-top:0">Perguntas Frequentes</h2>
+
+      <div class="faq-item">
+        <strong>É gratuito?</strong>
+        <div class="small">Não — SpyMessage é um serviço por assinatura com teste inicial de sete dias por US$ 3,99. Após o período, a cobrança mensal é exibida no momento do cadastro.</div>
+      </div>
+
+      <div class="faq-item">
+        <strong>Como cancelo?</strong>
+        <div class="small">Você pode cancelar a qualquer momento dentro do painel com um clique; sua assinatura deixa de renovar imediatamente.</div>
+      </div>
+
+      <div class="faq-item">
+        <strong>Quais dados eu posso encontrar?</strong>
+        <div class="small">Informações públicas: nomes, endereços, perfis públicos e referências em páginas web. Não fornecemos mensagens privadas, localização em tempo real nem acesso a contas.</div>
+      </div>
+
+      <div class="faq-item">
+        <strong>As buscas são confidenciais?</strong>
+        <div class="small">Sim — suas pesquisas não são expostas publicamente. A informação retornada é apenas de fontes publicamente acessíveis.</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="card">
+        <h3 style="margin-top:0">Aviso de Uso</h3>
+        <p class="small">Use SpyMessage apenas para fins legais e éticos: identificação de chamadas desconhecidas, segurança pessoal e verificação em transações particulares. É proibido empregar o serviço para perseguir, assediar, difamar ou obter acesso a comunicações privadas. SpyMessage agrega dados de fontes públicas e não é uma agência de relatórios de crédito.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
+      <div style="max-width:640px">
+        <div style="font-weight:700">SpyMessage</div>
+        <div class="small legal">SpyMessage Inc — Endereço fictício para demonstração. Este site é exemplo e não representa um produto real. Ao usar dados de terceiros, verifique sempre conformidade legal em sua jurisdição.</div>
+      </div>
+
+      <div style="display:flex;gap:18px;align-items:center">
+        <a href="#" class="link-muted">Suporte</a>
+        <a href="#" class="link-muted">Política de Privacidade</a>
+        <a href="#" class="link-muted">Termos</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Pequeno script: somente demo -->
+  <script>
+    // Simula habilitar/desabilitar campos conforme a aba (Telefone / Email / Foto)
+    document.querySelectorAll('.hero button').forEach(btn=>{
+      btn.addEventListener('click', ()=> {
+        document.querySelectorAll('.hero button').forEach(b=>b.style.border='1px solid #e6eef8');
+        btn.style.border='1px solid rgba(11,103,255,0.25)';
+      });
+    });
+  </script>
+</body>
+</html>
