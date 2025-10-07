@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz Espiritual — La Cuaresma del Padre Pío</title>
+  <style>
+    :root{
+      --bg:#f7f7f7;
+      --card:#ffffff;
+      --text:#2a2a2a;
+      --muted:#666;
+      --gold:#d4af37;
+      --gold-dark:#c19e2d;
+      --soft:#e9e9e9;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    .wrap{
+      min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px;
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(212,175,55,.06), transparent 60%),
+        radial-gradient(900px 500px at 120% 10%, rgba(212,175,55,.08), transparent 60%);
+    }
+    .card{
+      width:100%;max-width:760px;background:var(--card);border-radius:16px;
+      box-shadow:0 12px 40px rgba(0,0,0,.06);overflow:hidden;
+      border:1px solid #eee;
+      animation:pop .35s ease;
+    }
+    @keyframes pop{from{transform:scale(.98);opacity:.7}to{transform:scale(1);opacity:1}}
+
+    .header{
+      padding:28px 28px 18px 28px;text-align:center;
+    }
+    .title{margin:0;font-size:1.6rem;letter-spacing:.2px}
+    .subtitle{margin:10px 0 0 0;color:var(--muted);line-height:1.6}
+
+    .hero{
+      display:block;width:100%;height:240px;object-fit:cover;background:#ddd
+    }
+
+    .progress{
+      width:100%;height:8px;background:#f1f1f1
+    }
+    .progress > span{
+      display:block;height:8px;background:linear-gradient(90deg,var(--gold),#f3d98a);
+      width:0%;transition:width .35s ease;border-radius:0 6px 6px 0
+    }
+
+    .content{padding:22px 22px 28px 22px}
+    .q-index{color:var(--muted);font-size:.95rem;margin:0 0 10px 0}
+    .question{font-size:1.25rem;margin:0 0 14px 0}
+
+    .options{display:grid;gap:10px;margin-top:12px}
+    .option{
+      background:#fafafa;border:1px solid #eee;border-radius:12px;padding:14px 16px;text-align:left;
+      cursor:pointer;font-size:1rem;transition:.2s ease;display:flex;gap:10px;align-items:center
+    }
+    .option:hover{transform:translateY(-1px);background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.06)}
+    .option:active{transform:translateY(0)}
+
+    .btn{
+      appearance:none;border:none;border-radius:10px;background:var(--gold);color:#fff;
+      padding:14px 18px;font-size:1rem;cursor:pointer;transition:background .2s ease,transform .08s ease;
+      display:inline-flex;gap:8px;align-items:center;justify-content:center
+    }
+    .btn:hover{background:var(--gold-dark)}
+    .btn:active{transform:translateY(1px)}
+    .btn.link{background:#fff;color:var(--gold);border:1px solid var(--gold)}
+    .footer{padding:0 22px 26px 22px;display:flex;justify-content:center;gap:10px}
+
+    .result{padding:24px 22px 28px 22px;text-align:center}
+    .result h2{margin:6px 0 10px 0;font-size:1.4rem}
+    .result p{color:var(--muted);line-height:1.7;margin:0 auto 6px auto;max-width:64ch}
+
+    .note{font-size:.9rem;color:#888;margin-top:12px}
+
+    @media (min-width:640px){
+      .content{padding:28px}
+      .result{padding:32px}
+      .hero{height:300px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" id="quizCard">
+
+      <!-- Hero inicial -->
+      <img class="hero" id="hero"
+           src="https://source.unsplash.com/1600x900/?sunrise,light"
+           alt="Luz suave al amanecer" />
+
+      <div class="header">
+        <h1 class="title">🌿 Descubre qué te está pidiendo tu momento espiritual</h1>
+        <p class="subtitle" id="intro">
+          A veces, la vida nos invita a detenernos, reflexionar y reconectar con lo que realmente importa.<br/>
+          Este breve cuestionario te ayudará a descubrirlo — y cómo un camino de <strong>40 días</strong> puede renovarte desde dentro.
+        </p>
+        <div class="footer" id="startCta">
+          <button class="btn" id="startBtn">✨ Comenzar ahora</button>
+        </div>
+      </div>
+
+      <!-- Barra de progreso -->
+      <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+        <span id="bar"></span>
+      </div>
+
+      <!-- Conteúdo dinâmico -->
+      <div class="content" id="stage" style="display:none;">
+        <p class="q-index" id="qIndex">Pregunta 1 de 10</p>
+        <h2 class="question" id="qText">…</h2>
+        <div class="options" id="options"></div>
+      </div>
+
+      <!-- Resultado -->
+      <div class="result" id="result" style="display:none;">
+        <img class="hero" id="resultImg"
+             src="https://source.unsplash.com/1600x900/?golden,light"
+             alt="Luz cálida y esperanzadora" />
+        <h2 id="resultTitle">…</h2>
+        <p id="resultText">…</p>
+        <div class="footer">
+          <button class="btn" id="checkoutBtn">🕊️ Comenzar mi camino</button>
+          <button class="btn link" id="retryBtn">↺ Hacer el quiz otra vez</button>
+        </div>
+        <p class="note">*Redirige al checkout oficial de <em>La Cuaresma del Padre Pío</em>.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // 🔗 Trocar pelo seu link de checkout:
+    const CHECKOUT_URL = "#LINK_DO_CHECKOUT_AQUI#";
+
+    // 📸 Biblioteca de imagens por etapa (Unsplash Source aleatório por palavra-chave)
+    const stepImages = [
+      "https://source.unsplash.com/1600x900/?sunrise,light",           // 1 despertar
+      "https://source.unsplash.com/1600x900/?church,candles",          // 2 desafíos
+      "https://source.unsplash.com/1600x900/?calm,nature",             // 3 falta
+      "https://source.unsplash.com/1600x900/?stained-glass,church",    // 4 frase
+      "https://source.unsplash.com/1600x900/?bible,prayer",            // 5 cuidado espiritual
+      "https://source.unsplash.com/1600x900/?forest,sunrays",          // 6 paz interior
+      "https://source.unsplash.com/1600x900/?window,light",            // 7 reacción
+      "https://source.unsplash.com/1600x900/?rosary,devotion",         // 8 fe actual
+      "https://source.unsplash.com/1600x900/?path,light",              // 9 transformar 40 días
+      "https://source.unsplash.com/1600x900/?dove,sky"                 // 10 inspiración
+    ];
+
+    // ✨ Perguntas (com emojis)
+    const questions = [
+      { q:"🌅 Al despertar cada mañana, ¿qué sientes con más frecuencia?",
+        a:["Paz y gratitud por un nuevo día","Cansancio o preocupación","Esperanza, pero también incertidumbre","Dificultad para encontrar motivación"] },
+      { q:"🕯️ ¿Cómo sueles afrontar los desafíos del día a día?",
+        a:["Con serenidad y confianza","Con ansiedad, intentando controlarlo todo","Buscando apoyo en algo superior","A veces me siento perdido(a)"] },
+      { q:"🧭 ¿Qué sientes que te falta últimamente?",
+        a:["Tiempo para mí","Un propósito más claro","Fuerza interior y confianza","Silencio y paz"] },
+      { q:"💬 ¿Con cuál de estas frases resuenas más ahora?",
+        a:["“Todo tiene su tiempo.”","“Necesito reencontrar mi equilibrio.”","“Quiero conectar más con lo espiritual.”","“Siento que mi fe necesita renovarse.”"] },
+      { q:"📖 ¿Cómo cuidas tu vida espiritual?",
+        a:["Rezo o medito con frecuencia","Lo intento pero me cuesta mantener el hábito","Aún estoy buscando mi camino","No tengo práctica fija, pero lo deseo"] },
+      { q:"🌲 ¿Qué te trae más paz interior?",
+        a:["Silencio y reflexión","Lecturas que inspiran","Naturaleza y aire libre","Oración o devoción"] },
+      { q:"🌧️ Cuando algo no sale como esperas, ¿cómo reaccionas?",
+        a:["Acepto y confío","Me frustro con facilidad","Busco el aprendizaje","Prefiero guardar silencio"] },
+      { q:"🕊️ ¿Cómo te sientes respecto a tu fe actualmente?",
+        a:["Fuerte y confiado(a)","Inestable, pero con ganas de mejorar","En busca de renovación","Distante, pero con deseo de volver a conectar"] },
+      { q:"⏳ ¿Qué te gustaría transformar en los próximos 40 días?",
+        a:["Mi paz interior","Mi confianza en mí y en la vida","Mi conexión espiritual","Mi equilibrio emocional"] },
+      { q:"✨ ¿Qué te inspira más en una jornada espiritual?",
+        a:["Sentirme guiado(a)","Aprender y crecer cada día","Las transformaciones internas","La presencia de algo superior"] }
+    ];
+
+    // 💫 Resultados
+    const results = [
+      {
+        title:"Estás listo(a) para una renovación interior",
+        text:"Tu corazón pide un tiempo de silencio y reconexión. Un camino guiado de 40 días puede ser el impulso que necesitas para restaurar tu paz y fortalecer tu espíritu.",
+        img:"https://source.unsplash.com/1600x900/?golden,light"
+      },
+      {
+        title:"Buscas equilibrio y fuerza espiritual",
+        text:"La rutina puede haberte desconectado de ti mismo(a). Este es el momento perfecto para reencontrar tu centro, recuperar la calma y volver a sentir la paz interior.",
+        img:"https://source.unsplash.com/1600x900/?calm,light"
+      },
+      {
+        title:"Estás en un proceso de despertar",
+        text:"Sientes el llamado hacia algo más profundo — y eso es una señal hermosa. Permítete vivir 40 días de introspección, reflexión y conexión con lo divino que habita en ti.",
+        img:"https://source.unsplash.com/1600x900/?dawn,hope"
+      }
+    ];
+
+    // 🔧 Estado
+    let current = 0;
+    let score = 0;
+
+    // 🔗 Elementos
+    const startBtn  = document.getElementById("startBtn");
+    const startCta  = document.getElementById("startCta");
+    const intro     = document.getElementById("intro");
+    const stage     = document.getElementById("stage");
+    const qIndex    = document.getElementById("qIndex");
+    const qText     = document.getElementById("qText");
+    const optionsEl = document.getElementById("options");
+    const bar       = document.getElementById("bar");
+    const hero      = document.getElementById("hero");
+
+    const resultBox   = document.getElementById("result");
+    const resultImg   = document.getElementById("resultImg");
+    const resultTitle = document.getElementById("resultTitle");
+    const resultText  = document.getElementById("resultText");
+    const checkoutBtn = document.getElementById("checkoutBtn");
+    const retryBtn    = document.getElementById("retryBtn");
+
+    // ▶️ Iniciar
+    startBtn.addEventListener("click", () => {
+      startCta.style.display = "none";
+      intro.style.display = "none";
+      stage.style.display = "block";
+      current = 0; score = 0;
+      renderQuestion();
+    });
+
+    function renderQuestion(){
+      // Progresso + imagem
+      const percent = Math.round((current)/questions.length*100);
+      bar.style.width = percent + "%";
+      hero.src = stepImages[current] || stepImages[stepImages.length-1];
+
+      // Conteúdo
+      qIndex.textContent = `Pregunta ${current+1} de ${questions.length}`;
+      qText.textContent  = questions[current].q;
+
+      // Opções
+      optionsEl.innerHTML = "";
+      questions[current].a.forEach((label, i)=>{
+        const btn = document.createElement("button");
+        btn.className = "option";
+        btn.setAttribute("aria-label", label);
+        btn.innerHTML = `<span>•</span> <span>${label}</span>`;
+        btn.addEventListener("click", ()=>{
+          // simples scoring para distribuir resultados
+          score += i;
+          next();
+        });
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function next(){
+      current++;
+      if(current < questions.length){
+        fade(stage, ()=> renderQuestion());
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult(){
+      // Preencher resultado
+      const idx = score % results.length;
+      resultTitle.textContent = results[idx].title;
+      resultText.textContent  = results[idx].text;
+      resultImg.src = results[idx].img;
+
+      // UI
+      document.querySelector(".progress").style.display = "none";
+      stage.style.display = "none";
+      hero.style.display = "none";
+      resultBox.style.display = "block";
+      bar.style.width = "100%";
+    }
+
+    // CTA final
+    checkoutBtn.addEventListener("click", ()=> {
+      if (CHECKOUT_URL && CHECKOUT_URL !== "#LINK_DO_CHECKOUT_AQUI#"){
+        window.location.href = CHECKOUT_URL;
+      } else {
+        alert("⚠️ Añade tu enlace de checkout en la constante CHECKOUT_URL.");
+      }
+    });
+
+    // Repetir quiz
+    retryBtn.addEventListener("click", ()=>{
+      document.querySelector(".progress").style.display = "block";
+      hero.style.display = "block";
+      resultBox.style.display = "none";
+      startCta.style.display = "none";
+      intro.style.display = "none";
+      stage.style.display = "block";
+      current = 0; score = 0;
+      bar.style.width = "0%";
+      renderQuestion();
+    });
+
+    // 💨 Fade helper
+    function fade(el, cb){
+      el.style.opacity = "0";
+      setTimeout(()=>{ cb(); el.style.opacity = "1"; }, 180);
+    }
+  </script>
+</body>
+</html>
